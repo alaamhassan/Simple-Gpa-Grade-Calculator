@@ -4,16 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.String;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Vector;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-
 
 public class StudentGradeGenerator {
 
@@ -121,74 +112,75 @@ public Boolean ParseInput(String inputFilePath)
 	        	_error="First Line should contain exactly three values!";
 	        	return false;			
 	        }
+	        
+			/*Read the rest of the file*/
+			while((StudentRecord= bufferedReader.readLine()) !=null)
+			{
+				/* Increment the ErrorlineNumber every iteration 
+				 * to detect the line number if an error occurred.
+				 */
+				ErrorlineNumber++;
+				
+				/*separate every line by commas
+				 *into StudentName,StudentNumber,StudentActivitiesMark,
+				 *OralMark,MidtermExamMark,FinalExamMark.
+				 */			
+				 
+				String[] StudentRecords =StudentRecord.split(",");
+				
+				/*for each iteration a new studentInfo object will be created.
+				 * The objects will be stored in a list representing all the student's
+				 * info. Which will be used after in both the GpaAndGrade calculator functions
+				 * and output the Student grades file.
+				 */
+				StudentInfo studentInfo =new StudentInfo();
+
+				/* check if the current line contains exactly 6 parameter,
+				 * if not throw an error and break.
+				 */
+				if(StudentRecords.length ==6)
+				{
+
+					/*instead of passing the StudentRecords[] directly it should be
+					 * validated by a validation function (Maram,Alaa)
+					 * if the value was correct according to the program 
+					 * constrains: the value will be returned as it is.
+					 * else: the function will rise an error and will return 
+					 * an empty string (the return false to cause that the InputParse
+					 * function to not proceed and return)
+					 * => Maram,Alaa functions will be executed here.
+					 */
+					if((studentInfo.StudentName=StudentRecords[0])=="")return false;
+					if((studentInfo.StudentNumber=StudentRecords[1])=="")return false;
+					/* note: the input should not be converted to int.
+					 * This is used just for testing
+					 * the validation functions should take a string value.
+					 * validate it, if it correct return the converted int value.
+					 * other cause an error and exit (still thinking about a better way).
+					 */
+					if((studentInfo.StudentActivitiesMark=Integer.parseInt(StudentRecords[2]))==-1)return false;
+					if((studentInfo.OralMark=ValidateOralMark(StudentRecords[3]))==-1)return  false;
+					if((studentInfo.MidtermExamMark=ValidateMidtermExamMark(StudentRecords[4]))==-1)return false;
+					if((studentInfo.FinalExamMark=ValidateFinalExamMark(StudentRecords[5]))==-1)return false;
+				}
+				else 
+				{
+					_error=" Line Number ("+ErrorlineNumber+") should contain exactly six values!";
+					break;
+				}			 		
+				
+				/*if the code reached here then that's mean the parse 
+				 *of the current line was successfully done.
+				 *Add the studentInfo record to the StudentsInfo list
+				 */
+				
+				StudentsInfo.add(studentInfo);
+			}
 	
 			
 		}
 		
-		/*Read the rest of the file*/
-		while((StudentRecord= bufferedReader.readLine()) !=null)
-		{
-			/* Increment the ErrorlineNumber every iteration 
-			 * to detect the line number if an error occurred.
-			 */
-			ErrorlineNumber++;
-			
-			/*separate every line by commas
-			 *into StudentName,StudentNumber,StudentActivitiesMark,
-			 *OralMark,MidtermExamMark,FinalExamMark.
-			 */			
-			 
-			String[] StudentRecords =StudentRecord.split(",");
-			
-			/*for each iteration a new studentInfo object will be created.
-			 * The objects will be stored in a list representing all the student's
-			 * info. Which will be used after in both the GpaAndGrade calculator functions
-			 * and output the Student grades file.
-			 */
-			StudentInfo studentInfo =new StudentInfo();
-
-			/* check if the current line contains exactly 6 parameter,
-			 * if not throw an error and break.
-			 */
-			if(StudentRecords.length ==6)
-			{
-
-			/*instead of passing the StudentRecords[] directly it should be
-			 * validated by a validation function (Maram,Alaa)
-			 * if the value was correct according to the program 
-			 * constrains: the value will be returned as it is.
-			 * else: the function will rise an error and will return 
-			 * an empty string (the return false to cause that the InputParse
-			 * function to not proceed and return)
-			 * => Maram,Alaa functions will be executed here.
-			 */
-			if((studentInfo.StudentName=StudentRecords[0])=="")return false;
-			if((studentInfo.StudentNumber=StudentRecords[1])=="")return false;
-			/* note: the input should not be converted to int.
-			 * This is used just for testing
-			 * the validation functions should take a string value.
-			 * validate it, if it correct return the converted int value.
-			 * other cause an error and exit (still thinking about a better way).
-			 */
-			if((studentInfo.StudentActivitiesMark=Integer.parseInt(StudentRecords[2]))==-1)return false;
-			if((studentInfo.OralMark=Integer.parseInt(StudentRecords[3]))==-1)return  false;
-			if((studentInfo.MidtermExamMark=Integer.parseInt(StudentRecords[4]))==-1)return false;
-			if((studentInfo.FinalExamMark=Integer.parseInt(StudentRecords[5]))==-1)return false;
-			}
-			else 
-			{
-				_error=" Line Number ("+ErrorlineNumber+") should contain exactly six values!";
-				break;
-			}			 		
-			
-			/*if the code reached here then that's mean the parse 
-			 *of the current line was successfully done.
-			 *Add the studentInfo record to the StudentsInfo list
-			 */
-			
-			StudentsInfo.add(studentInfo);
-		}
-		
+	
 		/*if the code reached here that means that the input was parsed
 		 * correctly and was correct according to the requirement
 		 */
@@ -213,7 +205,120 @@ public String getParsedInput()
 	return SubjectName;
 }
 
+
+
+/*function to validate if the oral mark is:
+ * 1) of type int.
+ * 2) value between 0 and 10.
+ */
+public int ValidateOralMark(String oralMark)
+{
+	try {
+		/*parse the string number in case of :
+		 * success: this means that oral mark is of type int
+		 * (then the value will be checked if it's between 0 & 10).
+		 * fail: an exception will occur. 
+		 */
+		int OralMark =Integer.parseInt(oralMark);
+		
+		/*check if the oralMark between 0 &10:
+		 * if it's : the value is correct and will be returned.
+		 * else: an error will be raised and the function will return with value -1.
+		 */
+		if(OralMark>=0 && OralMark<=10) return OralMark;
+		
+		_error ="Line ("+ErrorlineNumber+"): OralMark must value between 0 and 10!";
+		return -1;
+		
+	}
+	catch(Exception e)
+	{
+		/*if we reached here then that's means the oralMark wasn't of type int.
+		 * first raise an error then return with value -1.
+		 */
+		_error ="Line ("+ErrorlineNumber+"): OralMark must be of type int!";
+		return -1;
+	}
 }
+
+/*function to validate if the midtermMark is:
+ * 1) of type int.
+ * 2) value between 0 and 20.
+ */
+public int ValidateMidtermExamMark(String midtermMark)
+{
+	try {
+		/*parse the string number in case of :
+		 * success: this means that oral mark is of type int
+		 * (then the value will be checked if it's between 0 & 10).
+		 * fail: an exception will occur. 
+		 */
+		int MidtermMark =Integer.parseInt(midtermMark);
+		
+		/*check if the midtermMark between 0 &20:
+		 * if it's : the value is correct and will be returned.
+		 * else: an error will be raised and the function will return with value -1.
+		 */
+		if(MidtermMark>=0 && MidtermMark<=20) return MidtermMark;
+		
+		_error ="Line ("+ErrorlineNumber+"): MidtermExamMark must value between 0 and 20!";
+		return -1;
+		
+	}
+	catch(Exception e)
+	{
+		/*if we reached here then that's means the midtermMark wasn't of type int.
+		 * first raise an error then return with value -1.
+		 */
+		_error ="Line ("+ErrorlineNumber+"): MidtermExamMark must be of type int!";
+		return -1;
+	}
+}
+
+/*function to validate if the finalMark is:
+ * 1) of type int.
+ * 2) value between 0 and 60.
+ */
+public int ValidateFinalExamMark(String finalMark)
+{
+	try {
+		/*parse the string number in case of :
+		 * success: this means that finalMark is of type int
+		 * (then the value will be checked if it's between 0 & 60).
+		 * fail: an exception will occur. 
+		 */
+		int FinalMark =Integer.parseInt(finalMark);
+		
+		/*check if the finalMark between 0 &60:
+		 * if it's : the value is correct and will be returned.
+		 * else: an error will be raised and the function will return with value -1.
+		 */
+		if(FinalMark>=0 && FinalMark<=60) return FinalMark;
+		
+		_error ="Line ("+ErrorlineNumber+"): FinalExamMark must value between 0 and 60!";
+		return -1;
+		
+	}
+	catch(Exception e)
+	{
+		/*if we reached here then that's means the finalMark wasn't of type int.
+		 * first raise an error then return with value -1.
+		 */
+		_error ="Line ("+ErrorlineNumber+"): FinalExamMark must be of type int!";
+		return -1;
+	}
+}
+
+
+
+
+}
+
+
+
+
+
+
 
 
 
