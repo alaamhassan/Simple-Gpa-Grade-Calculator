@@ -159,9 +159,9 @@ public Boolean ParseInput(String inputFilePath)
 					 * other cause an error and exit (still thinking about a better way).
 					 */
 					if((studentInfo.StudentActivitiesMark=Integer.parseInt(StudentRecords[2]))==-1)return false;
-					if((studentInfo.OralMark=ValidateOralMark(StudentRecords[3]))==-1)return  false;
-					if((studentInfo.MidtermExamMark=ValidateMidtermExamMark(StudentRecords[4]))==-1)return false;
-					if((studentInfo.FinalExamMark=ValidateFinalExamMark(StudentRecords[5]))==-1)return false;
+					if((studentInfo.OralMark=ValidateMark("oralMark",StudentRecords[3],10))==-1)return  false;
+					if((studentInfo.MidtermExamMark=ValidateMark("MidtermExamMark",StudentRecords[4],20))==-1)return false;
+					if((studentInfo.FinalExamMark=ValidateMark("FinalExamMark",StudentRecords[5],60))==-1)return false;
 				}
 				else 
 				{
@@ -207,118 +207,42 @@ public String getParsedInput()
 
 
 
-/*function to validate if the oral mark is:
+/*function to validate if the mark is:
  * 1) of type int.
- * 2) value between 0 and 10.
+ * 2) value between 0 and a maximum mark.
  */
-public int ValidateOralMark(String oralMark)
+public int ValidateMark(String MarkName,String mark,int MaxMark)
 {
 	try {
 		/*parse the string number in case of :
-		 * success: this means that oral mark is of type int
-		 * (then the value will be checked if it's between 0 & 10).
+		 * success: this means that mark is of type int
+		 * (then the value will be checked if it's between 0 & MaxMark).
 		 * fail: an exception will occur. 
 		 */
-		int OralMark =Integer.parseInt(oralMark);
+		int Mark =Integer.parseInt(mark);
 		
-		/*check if the oralMark between 0 &10:
+		/*check if the mark between 0 & MaxMark:
 		 * if it's : the value is correct and will be returned.
 		 * else: an error will be raised and the function will return with value -1.
 		 */
-		if(OralMark>=0 && OralMark<=10) return OralMark;
+		if(Mark>=0 && Mark<=10) return Mark;
 		
-		_error ="Line ("+ErrorlineNumber+"): OralMark must value between 0 and 10!";
+		_error ="Line ("+ErrorlineNumber+"): "+MarkName +" must value between 0 and "+ MaxMark +"!";
 		return -1;
 		
 	}
 	catch(Exception e)
 	{
-		/*if we reached here then that's means the oralMark wasn't of type int.
+		/*if we reached here then that's means the mark wasn't of type int.
 		 * first raise an error then return with value -1.
 		 */
-		_error ="Line ("+ErrorlineNumber+"): OralMark must be of type int!";
-		return -1;
-	}
-}
-
-/*function to validate if the midtermMark is:
- * 1) of type int.
- * 2) value between 0 and 20.
- */
-public int ValidateMidtermExamMark(String midtermMark)
-{
-	try {
-		/*parse the string number in case of :
-		 * success: this means that oral mark is of type int
-		 * (then the value will be checked if it's between 0 & 10).
-		 * fail: an exception will occur. 
-		 */
-		int MidtermMark =Integer.parseInt(midtermMark);
-		
-		/*check if the midtermMark between 0 &20:
-		 * if it's : the value is correct and will be returned.
-		 * else: an error will be raised and the function will return with value -1.
-		 */
-		if(MidtermMark>=0 && MidtermMark<=20) return MidtermMark;
-		
-		_error ="Line ("+ErrorlineNumber+"): MidtermExamMark must value between 0 and 20!";
-		return -1;
-		
-	}
-	catch(Exception e)
-	{
-		/*if we reached here then that's means the midtermMark wasn't of type int.
-		 * first raise an error then return with value -1.
-		 */
-		_error ="Line ("+ErrorlineNumber+"): MidtermExamMark must be of type int!";
-		return -1;
-	}
-}
-
-/*function to validate if the finalMark is:
- * 1) of type int.
- * 2) value between 0 and 60.
- */
-public int ValidateFinalExamMark(String finalMark)
-{
-	try {
-		/*parse the string number in case of :
-		 * success: this means that finalMark is of type int
-		 * (then the value will be checked if it's between 0 & 60).
-		 * fail: an exception will occur. 
-		 */
-		int FinalMark =Integer.parseInt(finalMark);
-		
-		/*check if the finalMark between 0 &60:
-		 * if it's : the value is correct and will be returned.
-		 * else: an error will be raised and the function will return with value -1.
-		 */
-		if(FinalMark>=0 && FinalMark<=60) return FinalMark;
-		
-		_error ="Line ("+ErrorlineNumber+"): FinalExamMark must value between 0 and 60!";
-		return -1;
-		
-	}
-	catch(Exception e)
-	{
-		/*if we reached here then that's means the finalMark wasn't of type int.
-		 * first raise an error then return with value -1.
-		 */
-		_error ="Line ("+ErrorlineNumber+"): FinalExamMark must be of type int!";
+		_error ="Line ("+ErrorlineNumber+"): "+MarkName+" must be of type int!";
 		return -1;
 	}
 }
 
 
-
-
 }
-
-
-
-
-
-
 
 
 
