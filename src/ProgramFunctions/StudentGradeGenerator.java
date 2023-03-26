@@ -238,7 +238,7 @@ public class StudentGradeGenerator {
 			 * if it's : the value is correct and will be returned.
 			 * else: an error will be raised and the function will return with value -1.
 			 */
-			if(Mark>=0 && Mark<=10) return Mark;
+			if(Mark>=0 && Mark<=MaxMark) return Mark;
 
 			_error ="Line ("+ErrorlineNumber+"): "+MarkName +" must value between 0 and "+ MaxMark +"!";
 			return -1;
