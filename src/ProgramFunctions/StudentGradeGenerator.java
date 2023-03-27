@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.String;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 //import StudentGradeGenerator.StudentInfo;
 
@@ -164,8 +165,10 @@ public class StudentGradeGenerator {
 						 * function to not proceed and return)
 						 * => Maram,Alaa functions will be executed here.
 						 */
-						if((studentInfo.StudentName=StudentRecords[0].trim())=="")return false;
-						if((studentInfo.StudentNumber=StudentRecords[1].trim())=="")return false;
+						studentInfo.StudentName=StudentRecords[0].trim();
+						studentInfo.StudentNumber=StudentRecords[1].trim();
+						if((validateStudentName(studentInfo.StudentName))==-1)return false;
+						if((validateStudentNumber(studentInfo.StudentNumber))==-1)return false;
 						/* note: the input should not be converted to int.
 						 * This is used just for testing
 						 * the validation functions should take a string value.
@@ -257,6 +260,22 @@ public class StudentGradeGenerator {
 			_error = "Line (" + ErrorlineNumber + "): " + studentName + " is not a valid Student Name! It can't start with a space.";
 			return -1;
 		} //else if ()
+		else {
+			return 0;
+		}
+	}
+	
+	public int validateStudentNumber(String studentNumber) {
+		if (studentNumber.equals("")) {
+			_error = "Line (" + ErrorlineNumber + "): Empty Student Number.";
+			return -1;
+		} else if (studentNumber.length() != 8) {
+			_error = "Line (" + ErrorlineNumber + "): " + studentNumber + " must be 8 characters.";
+			return -1;
+		} else if (!Pattern.matches("[0-9]{7}[0-9a-zA-Z]", studentNumber)) {
+			_error = "Line (" + ErrorlineNumber + "): " + studentNumber + " is not a valid Student Number! It must include 8 numbers, or 7 numbers and a character at the end.";
+			return -1;
+		}
 		else {
 			return 0;
 		}
@@ -356,12 +375,17 @@ public class StudentGradeGenerator {
 			FileWriter writer = new FileWriter("output.txt");
 			writer.write("Subject Name: " + getSubjectName());
 			writer.write("\t\t Max Mark: " + getFullMark() + "\n");
-			writer.write("Student name   Student number   GPA   Grade");
+			writer.write("Student name      Student number      GPA      Grade");
+			/*if (studentsInfo.size() == 0) {
+				_error = "No Students Info to show!";
+				writer.close();
+				return false;
+			}*/
 			for (int i = 0; i < studentsInfo.size(); i++) {
 				writer.write("\n");
-				writer.write(studentsInfo.get(i).StudentName + " ");
-				writer.write(studentsInfo.get(i).StudentNumber + " ");
-				writer.write(String.valueOf(studentsInfo.get(i).GPA) + " ");
+				writer.write(studentsInfo.get(i).StudentName + "        ");
+				writer.write(studentsInfo.get(i).StudentNumber + "          ");
+				writer.write(String.valueOf(studentsInfo.get(i).GPA) + "          ");
 				writer.write(String.valueOf(studentsInfo.get(i).Grade));
 			}
 			writer.close();
