@@ -7,11 +7,13 @@ public class Main {
          
 		StudentGradeGenerator g =new StudentGradeGenerator();
 		
-		g.ParseInput("C:\\Users\\win10\\Downloads\\testing-csvfile\\csv.txt");
+		g.ParseInput("C:\\Users\\hp\\Desktop\\csv.txt");
+		g.gradeAndGPACalculator(g.getStudentsInfo());
+		g.writeToOutputFile(g.getStudentsInfo(), g.getSubjectName(), g.getFullMark());
 		
-		System.out.println(g.getError());
+		//System.out.println(g.getError());
 		
-		System.out.println(g.getParsedInput());
+		//System.out.println(g.getParsedInput());
 		
 	}
 

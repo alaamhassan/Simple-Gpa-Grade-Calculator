@@ -2,6 +2,7 @@ package ProgramFunctions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.String;
 import java.util.Iterator;
@@ -171,7 +172,7 @@ public class StudentGradeGenerator {
 						 * validate it, if it correct return the converted int value.
 						 * other cause an error and exit (still thinking about a better way).
 						 */
-						if((studentInfo.StudentActivitiesMark=Integer.parseInt(StudentRecords[2].trim()))==-1)return false;
+						if((studentInfo.StudentActivitiesMark=ValidateMark("Student Activities Mark", StudentRecords[2].trim(), 10))==-1)return false;
 						if((studentInfo.OralMark=ValidateMark("oralMark",StudentRecords[3].trim(),10))==-1)return  false;
 						if((studentInfo.MidtermExamMark=ValidateMark("MidtermExamMark",StudentRecords[4].trim(),20))==-1)return false;
 						if((studentInfo.FinalExamMark=ValidateMark("FinalExamMark",StudentRecords[5].trim(),60))==-1)return false;
@@ -204,8 +205,6 @@ public class StudentGradeGenerator {
 			_error="Input path dosn't exist!";
 			return false;
 		}
-
-
 	}
 
 	public String getError()
@@ -218,8 +217,7 @@ public class StudentGradeGenerator {
 		return SubjectName;
 	}
 
-
-
+	/******************************Input Validation Functions*******************************/
 	/*function to validate if the mark is:
 	 * 1) of type int.
 	 * 2) value between 0 and a maximum mark.
@@ -240,7 +238,7 @@ public class StudentGradeGenerator {
 			 */
 			if(Mark>=0 && Mark<=MaxMark) return Mark;
 
-			_error ="Line ("+ErrorlineNumber+"): "+MarkName +" must value between 0 and "+ MaxMark +"!";
+			_error ="Line ("+ErrorlineNumber+"): "+MarkName +" must be a value between 0 and "+ MaxMark +"!";
 			return -1;
 
 		}
@@ -253,6 +251,17 @@ public class StudentGradeGenerator {
 			return -1;
 		}
 	}
+
+	public int validateStudentName(String studentName) {
+		if (studentName.charAt(0) == ' ') {
+			_error = "Line (" + ErrorlineNumber + "): " + studentName + " is not a valid Student Name! It can't start with a space.";
+			return -1;
+		} //else if ()
+		else {
+			return 0;
+		}
+	}
+	
 	/*****************************************CALCULATOR***********************************/
 
 	public static Vector gradeAndGPACalculator(Vector<StudentInfo> students) {
@@ -325,12 +334,44 @@ public class StudentGradeGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
 		return students;
-
 	}
-
+	/**************************************************************************************/
+	public Vector<StudentInfo> getStudentsInfo() {
+		return StudentsInfo;
+	}
+	
+	public String getSubjectName() {
+		return SubjectName;
+	}
+	
+	public int getFullMark() {
+		return FullMark;
+	}
+	
+	/**************************Function to write to output file***********************/
+	public Boolean writeToOutputFile(Vector<StudentInfo> studentsInfo, String subjectName, int fullMark) {
+		
+		try {
+			FileWriter writer = new FileWriter("output.txt");
+			writer.write("Subject Name: " + getSubjectName());
+			writer.write("\t\t Max Mark: " + getFullMark() + "\n");
+			writer.write("Student name   Student number   GPA   Grade");
+			for (int i = 0; i < studentsInfo.size(); i++) {
+				writer.write("\n");
+				writer.write(studentsInfo.get(i).StudentName + " ");
+				writer.write(studentsInfo.get(i).StudentNumber + " ");
+				writer.write(String.valueOf(studentsInfo.get(i).GPA) + " ");
+				writer.write(String.valueOf(studentsInfo.get(i).Grade));
+			}
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	/***************************************************************************************/
 }
 
 
