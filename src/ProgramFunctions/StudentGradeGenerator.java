@@ -109,8 +109,8 @@ public class StudentGradeGenerator {
 					 * an empty string (the return false to cause that the InputParse
 					 * function to not proceed and return)
 					 */
-					if((SubjectName=firstLine[0])=="") return false;
-					if((SubjectCode=firstLine[1])=="")return false;
+					if((SubjectName=firstLine[0].trim())=="") return false;
+					if((SubjectCode=firstLine[1].trim())=="")return false;
 					/*note: the input should not be converted to int
 					 * this is used just for testing.
 					 * The validation functions should take a string value.
@@ -118,7 +118,7 @@ public class StudentGradeGenerator {
 					 * else: raise an error and return -1 (the return false to cause that the 
 					 * InputParse function to not proceed and return) .
 					 */
-					if((FullMark=Integer.parseInt(firstLine[2]))==-1)return false;        
+					if((FullMark=Integer.parseInt(firstLine[2].trim()))==-1)return false;        
 				}
 				else
 				{
@@ -163,18 +163,18 @@ public class StudentGradeGenerator {
 						 * function to not proceed and return)
 						 * => Maram,Alaa functions will be executed here.
 						 */
-						if((studentInfo.StudentName=StudentRecords[0])=="")return false;
-						if((studentInfo.StudentNumber=StudentRecords[1])=="")return false;
+						if((studentInfo.StudentName=StudentRecords[0].trim())=="")return false;
+						if((studentInfo.StudentNumber=StudentRecords[1].trim())=="")return false;
 						/* note: the input should not be converted to int.
 						 * This is used just for testing
 						 * the validation functions should take a string value.
 						 * validate it, if it correct return the converted int value.
 						 * other cause an error and exit (still thinking about a better way).
 						 */
-						if((studentInfo.StudentActivitiesMark=Integer.parseInt(StudentRecords[2]))==-1)return false;
-						if((studentInfo.OralMark=ValidateMark("oralMark",StudentRecords[3],10))==-1)return  false;
-						if((studentInfo.MidtermExamMark=ValidateMark("MidtermExamMark",StudentRecords[4],20))==-1)return false;
-						if((studentInfo.FinalExamMark=ValidateMark("FinalExamMark",StudentRecords[5],60))==-1)return false;
+						if((studentInfo.StudentActivitiesMark=Integer.parseInt(StudentRecords[2].trim()))==-1)return false;
+						if((studentInfo.OralMark=ValidateMark("oralMark",StudentRecords[3].trim(),10))==-1)return  false;
+						if((studentInfo.MidtermExamMark=ValidateMark("MidtermExamMark",StudentRecords[4].trim(),20))==-1)return false;
+						if((studentInfo.FinalExamMark=ValidateMark("FinalExamMark",StudentRecords[5].trim(),60))==-1)return false;
 					}
 					else 
 					{
