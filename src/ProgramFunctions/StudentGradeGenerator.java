@@ -5,20 +5,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.String;
-<<<<<<< HEAD
 import java.nio.file.Path;
 import java.nio.file.Paths;
-=======
->>>>>>> main
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
-<<<<<<< HEAD
 import org.apache.commons.lang3.StringUtils;
-
-=======
->>>>>>> main
 //import StudentGradeGenerator.StudentInfo;
 
 public class StudentGradeGenerator {
@@ -29,43 +22,26 @@ public class StudentGradeGenerator {
 	 * student ( StudentName,StudentNumber,StudentActivitiesMark,
 	 * OralMark,MidtermExamMark,FinalExamMark.)	
 	 */
-<<<<<<< HEAD
 	private static Vector<StudentInfo> StudentsInfo;
-=======
-	private Vector<StudentInfo> StudentsInfo;
->>>>>>> main
 	/*the error variable is used to store the error 
 	 *raised by any function. which is used later to in the gui
 	 *to display it to the user.
 	 */
-<<<<<<< HEAD
 	private static String _error="";
-=======
-	private String _error;
->>>>>>> main
 	/*the ErrorlineNumber is used to display the 
 	 * line of the error.
 	 * it's first initalized to zero, then in the 
 	 * InputParse function the variable is increased for every
 	 * line being parsed by one. 
 	 */
-<<<<<<< HEAD
 	private static int ErrorlineNumber=0;
-=======
-	private int ErrorlineNumber=0;
->>>>>>> main
 	/*the three variables (SubjectName,SubjectCode,FullMark)
 	 * is used for storing the values of the first line
 	 * of each file. which will be used later to generate the 
 	 * output file.
 	 */
-<<<<<<< HEAD
 	private static String SubjectName,SubjectCode;
 	private static int FullMark;
-=======
-	private String SubjectName,SubjectCode;
-	private int FullMark;
->>>>>>> main
 
 	/*the class studentInfo was used to store 
 	 * the six values ( StudentName,StudentNumber,StudentActivitiesMark,
@@ -73,11 +49,7 @@ public class StudentGradeGenerator {
 	 * store it in a vector.
 	 */
 
-<<<<<<< HEAD
 	private static class StudentInfo
-=======
-	public static class StudentInfo
->>>>>>> main
 	{
 		public String StudentName;
 		public String StudentNumber;
@@ -97,7 +69,6 @@ public class StudentGradeGenerator {
 		}
 		public StudentInfo(){}
 	}
-<<<<<<< HEAD
 
     /*variable to store the path of the output generated file
 	* which is used later to display it to the user through the
@@ -117,16 +88,11 @@ public class StudentGradeGenerator {
 
 
 	public static Boolean ParseInput(String inputFilePath)
-=======
-
-	public Boolean ParseInput(String inputFilePath)
->>>>>>> main
 	{
 		try {
 
 			BufferedReader bufferedReader =new BufferedReader (new FileReader(inputFilePath));
 
-<<<<<<< HEAD
 
 			String StudentRecord =null;
 
@@ -139,16 +105,6 @@ public class StudentGradeGenerator {
 			StudentsInfo =new Vector<StudentInfo>();
             ErrorlineNumber=0;
             _error="";
-=======
-			String StudentRecord =null;
-
-			/*initialize the Student'sInfo with a vector of capacity 10*/
-			/*The initialization was done here.
-			 *to avoid initializing the variable and waste memory in case the
-			 *input file was invalid (an exception occurred).
-			 */
-			StudentsInfo =new Vector<StudentInfo>();
->>>>>>> main
 
 			/*Read only The first line in the file*/ 
 			if((StudentRecord= bufferedReader.readLine()) !=null)
@@ -179,13 +135,8 @@ public class StudentGradeGenerator {
 					 * an empty string (the return false to cause that the InputParse
 					 * function to not proceed and return)
 					 */
-<<<<<<< HEAD
 					if((SubjectName=SubjectName_Checker(firstLine[0]))=="") return false;
 					if((SubjectCode=SubjectCode_Checker(firstLine[1].trim()))=="")return false;
-=======
-					if((SubjectName=firstLine[0].trim())=="") return false;
-					if((SubjectCode=firstLine[1].trim())=="")return false;
->>>>>>> main
 					/*note: the input should not be converted to int
 					 * this is used just for testing.
 					 * The validation functions should take a string value.
@@ -193,11 +144,7 @@ public class StudentGradeGenerator {
 					 * else: raise an error and return -1 (the return false to cause that the 
 					 * InputParse function to not proceed and return) .
 					 */
-<<<<<<< HEAD
 					if((FullMark=FullMark_Checker(firstLine[2].trim()))==-1)return false;        
-=======
-					if((FullMark=Integer.parseInt(firstLine[2].trim()))==-1)return false;        
->>>>>>> main
 				}
 				else
 				{
@@ -253,15 +200,9 @@ public class StudentGradeGenerator {
 						 * other cause an error and exit (still thinking about a better way).
 						 */
 						if((studentInfo.StudentActivitiesMark=ValidateMark("Student Activities Mark", StudentRecords[2].trim(), 10))==-1)return false;
-<<<<<<< HEAD
 						if((studentInfo.OralMark=ValidateMark("Oral Mark",StudentRecords[3].trim(),10))==-1)return  false;
 						if((studentInfo.MidtermExamMark=ValidateMark("Midterm Exam Mark",StudentRecords[4].trim(),20))==-1)return false;
 						if((studentInfo.FinalExamMark=ValidateMark("Final Exam Mark",StudentRecords[5].trim(),60))==-1)return false;
-=======
-						if((studentInfo.OralMark=ValidateMark("oralMark",StudentRecords[3].trim(),10))==-1)return  false;
-						if((studentInfo.MidtermExamMark=ValidateMark("MidtermExamMark",StudentRecords[4].trim(),20))==-1)return false;
-						if((studentInfo.FinalExamMark=ValidateMark("FinalExamMark",StudentRecords[5].trim(),60))==-1)return false;
->>>>>>> main
 					}
 					else 
 					{
@@ -290,7 +231,6 @@ public class StudentGradeGenerator {
 		catch (IOException e) {
 			_error="Input path dosn't exist!";
 			return false;
-<<<<<<< HEAD
 		}
 	}
 
@@ -493,64 +433,6 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 		Path path = Paths.get("output.txt");
 		outputFilePath = path.toAbsolutePath();
 		return true;
-=======
-		}
-	}
-
-	public String getError()
-	{
-		return _error;
-	}
-
-	public String getParsedInput()
-	{
-		return SubjectName;
-	}
-
-	/******************************Input Validation Functions*******************************/
-	/*function to validate if the mark is:
-	 * 1) of type int.
-	 * 2) value between 0 and a maximum mark.
-	 */
-	public int ValidateMark(String MarkName,String mark,int MaxMark)
-	{
-		try {
-			/*parse the string number in case of :
-			 * success: this means that mark is of type int
-			 * (then the value will be checked if it's between 0 & MaxMark).
-			 * fail: an exception will occur. 
-			 */
-			int Mark =Integer.parseInt(mark);
-
-			/*check if the mark between 0 & MaxMark:
-			 * if it's : the value is correct and will be returned.
-			 * else: an error will be raised and the function will return with value -1.
-			 */
-			if(Mark>=0 && Mark<=MaxMark) return Mark;
-
-			_error ="Line ("+ErrorlineNumber+"): "+MarkName +" must be a value between 0 and "+ MaxMark +"!";
-			return -1;
-
-		}
-		catch(Exception e)
-		{
-			/*if we reached here then that's means the mark wasn't of type int.
-			 * first raise an error then return with value -1.
-			 */
-			_error ="Line ("+ErrorlineNumber+"): "+MarkName+" must be of type int!";
-			return -1;
-		}
-	}
-
-	public int validateStudentName(String studentName) {
-		if (studentName.charAt(0) == ' ') {
-			_error = "Line (" + ErrorlineNumber + "): " + studentName + " is not a valid Student Name! It can't start with a space.";
-			return -1;
-		} //else if ()
-		else {
-			return 0;
-		}
->>>>>>> main
 	}
 	
 	public int validateStudentNumber(String studentNumber) {
@@ -569,129 +451,5 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 		}
 	}
 	
-<<<<<<< HEAD
 	/***************************************************************************************/
 }
-=======
-	/*****************************************CALCULATOR***********************************/
-
-	public static Vector gradeAndGPACalculator(Vector<StudentInfo> students) {
-
-		try {
-			int total_marks=0;
-			Iterator i = students.iterator();
-			int counter=0;
-			while (i.hasNext()) {
-
-				StudentInfo s=(StudentInfo)i.next();
-				total_marks=s.OralMark+s.StudentActivitiesMark+s.MidtermExamMark+s.FinalExamMark;
-				if((97<= total_marks) &&(total_marks<= 100)) {
-					s.GPA=4;
-					s.Grade="A+";
-				}
-				else if((93<= total_marks) &&(total_marks< 97) ){
-					s.GPA=4;
-					s.Grade="A";
-				}
-				else if((89<= total_marks) &&(total_marks< 93)) {
-					s.GPA=(float)3.7;
-					s.Grade="A-";
-				}
-				else if((84<= total_marks) &&(total_marks< 89)) {
-					s.GPA=(float)3.3;
-					s.Grade="B+";
-				}
-				else if((80<= total_marks )&&(total_marks< 84)) {
-					s.GPA=3;
-					s.Grade="B";
-				}
-				else if((76<= total_marks )&&(total_marks< 80) ){
-					s.GPA=(float)2.7;
-					s.Grade="B-";
-				}
-				else if((73<= total_marks) &&(total_marks< 76)) {
-					s.GPA=(float)2.3;
-					s.Grade="C+";
-				}
-				else if((70<= total_marks) &&(total_marks< 73)) {
-					s.GPA=2;
-					s.Grade="C";
-				}
-				else if((67<= total_marks) &&(total_marks< 70)) {
-					s.GPA=(float)1.7;
-					s.Grade="C-";
-				}
-				else if((64<= total_marks) &&(total_marks< 67)) {
-					s.GPA=(float)1.3;
-					s.Grade="D+";
-				}
-				else if((60<= total_marks) &&(total_marks< 64)) {
-					s.GPA=1;
-					s.Grade="D";
-
-				}
-				else if(60>total_marks ) {
-					s.GPA=0;
-					s.Grade="F";
-				}
-				else {
-
-					//System.out.println("INVALID INPUTS");
-				}
-
-				students.set(counter,s);
-				counter++;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return students;
-	}
-	/**************************************************************************************/
-	public Vector<StudentInfo> getStudentsInfo() {
-		return StudentsInfo;
-	}
-	
-	public String getSubjectName() {
-		return SubjectName;
-	}
-	
-	public int getFullMark() {
-		return FullMark;
-	}
-	
-	/**************************Function to write to output file***********************/
-	public Boolean writeToOutputFile(Vector<StudentInfo> studentsInfo, String subjectName, int fullMark) {
-		
-		try {
-			FileWriter writer = new FileWriter("output.txt");
-			writer.write("Subject Name: " + getSubjectName());
-			writer.write("\t\t Max Mark: " + getFullMark() + "\n");
-			writer.write("Student name      Student number      GPA      Grade");
-			/*if (studentsInfo.size() == 0) {
-				_error = "No Students Info to show!";
-				writer.close();
-				return false;
-			}*/
-			for (int i = 0; i < studentsInfo.size(); i++) {
-				writer.write("\n");
-				writer.write(studentsInfo.get(i).StudentName + "        ");
-				writer.write(studentsInfo.get(i).StudentNumber + "          ");
-				writer.write(String.valueOf(studentsInfo.get(i).GPA) + "          ");
-				writer.write(String.valueOf(studentsInfo.get(i).Grade));
-			}
-			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return true;
-	}
-	/***************************************************************************************/
-}
-
-
-
-
-
->>>>>>> main
