@@ -213,4 +213,30 @@ class StudentGradeGeneratorTest {
 		}
 
 	}
+	
+	/* Student Name test */
+	@Test
+	void testStudentName() {
+		String[] studentNames = new String[] {"Maram nabil", " Alaa Mohamed", "1Eman", "Mariam_Ezzat", "MAYAR", "Menna5", "  ", ""}; 
+		String studentNameTest = studentNames[0];
+		
+		assertNotEquals("", StudentGradeGenerator.validateStudentName(studentNameTest), String.format("Student Name Error! \"" + studentNameTest + "\" is an invalid student name."));
+	}
+	
+	/* Student Number test */
+	@Test
+	void testStudentNumber() {
+		String[] studentNumbers = new String[] {"18037464", "45687", "174862447", "123456gg", "", " 47", "1234756j", "e"};
+		String studentNumberTest = studentNumbers[0];
+		
+		assertEquals(0, StudentGradeGenerator.validateStudentNumber(studentNumberTest), String.format("Student Number Error! \"" + studentNumberTest + "\" is an invalid student number."));
+	}
+	
+	/* Student activities mark test */
+	@Test
+	void testStudentActivitiesMark() {
+		String[] studentActivitiesMarks = new String[] {"0", "10", "12", "4", "-7", "9", "", " "};
+		String studentActivitiesMarkTest = studentActivitiesMarks[0];
+		assertNotEquals(-1, StudentGradeGenerator.ValidateMark("Student Activities Mark", studentActivitiesMarkTest, 10, 0), String.format("Student Activities Mark Error! \"" + studentActivitiesMarkTest + "\" is an invalid student activities mark."));
+	}
 }

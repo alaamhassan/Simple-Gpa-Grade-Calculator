@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 
 //import StudentGradeGenerator.StudentInfo;
 
@@ -226,9 +226,10 @@ public class StudentGradeGenerator {
 						 * function to not proceed and return)
 						 * => Maram,Alaa functions will be executed here.
 						 */
-						studentInfo.StudentName=StudentRecords[0].trim();
+						studentInfo.StudentName=StudentRecords[0];
 						studentInfo.StudentNumber=StudentRecords[1].trim();
-						if((validateStudentName(studentInfo.StudentName))==-1)return false;
+						//if((validateStudentName(studentInfo.StudentName))==-1)return false;
+						if (validateStudentName(studentInfo.StudentName) == "") return false;
 						if((validateStudentNumber(studentInfo.StudentNumber))==-1)return false;
 						/* note: the input should not be converted to int.
 						 * This is used just for testing
@@ -354,14 +355,13 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 		}
 	}
 
-	public static int validateStudentName(String studentName) {
-		if (studentName.charAt(0) == ' ') {
-			_error = "Line (" + ErrorlineNumber + "): " + studentName + " is not a valid Student Name! It can't start with a space.";
-			return -1;
-		} //else if ()
-		else {
-			return 0;
-		}
+	public static String validateStudentName(String s) {
+		 //boolean result = s.matches("\\S[ A-Za-z]+$");
+		boolean result = s.matches("([A-Za-z]+[ ]*)+");
+		 if (result)
+			 return s;
+		 _error=" Line Number ("+ErrorlineNumber+") Student name must only contain Alphabetic characters and Spaces and must not start with space.";
+		 return "";
 	}
 	
 	public static int validateStudentNumber(String studentNumber) {
@@ -461,22 +461,30 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 		
 		try {
 			FileWriter writer = new FileWriter("output.txt");
+//			writer.write("Subject Name: " + SubjectName);
+//			writer.write("\t\t Max Mark: " + FullMark + "\n");
+//			writer.write("__________________________________________________________\n");
+//			writer.write("Student name      | Student number      | GPA      | Grade");
 			writer.write("Subject Name: " + SubjectName);
 			writer.write("\t\t Max Mark: " + FullMark + "\n");
-			writer.write("__________________________________________________________\n");
-			writer.write("Student name      | Student number      | GPA      | Grade");
+			writer.write("Student name   Student number   GPA   Grade");
 			/*if (studentsInfo.size() == 0) {
 				_error = "No Students Info to show!";
 				writer.close();
 				return false;
 			}*/
 			for (int i = 0; i < StudentsInfo.size(); i++) {
+//				writer.write("\n");
+//				writer.write("__________________________________________________________");
+//				writer.write("\n");
+//				writer.write(StringUtils.rightPad(StudentsInfo.get(i).StudentName,18," ")+"| ");
+//				writer.write(StringUtils.rightPad(StudentsInfo.get(i).StudentNumber,20," ") + "| ");
+//				writer.write(StringUtils.rightPad(String.valueOf(StudentsInfo.get(i).GPA),9," ")+"| ");
+//				writer.write(String.valueOf(StudentsInfo.get(i).Grade));
 				writer.write("\n");
-				writer.write("__________________________________________________________");
-				writer.write("\n");
-				writer.write(StringUtils.rightPad(StudentsInfo.get(i).StudentName,18," ")+"| ");
-				writer.write(StringUtils.rightPad(StudentsInfo.get(i).StudentNumber,20," ") + "| ");
-				writer.write(StringUtils.rightPad(String.valueOf(StudentsInfo.get(i).GPA),9," ")+"| ");
+				writer.write(StudentsInfo.get(i).StudentName + "    ");
+				writer.write(StudentsInfo.get(i).StudentNumber + "    ");
+				writer.write(String.valueOf(StudentsInfo.get(i).GPA) + "    ");
 				writer.write(String.valueOf(StudentsInfo.get(i).Grade));
 			}
 			writer.close();
