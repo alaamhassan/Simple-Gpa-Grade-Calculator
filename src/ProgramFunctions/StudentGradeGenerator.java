@@ -12,6 +12,7 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+
 //import StudentGradeGenerator.StudentInfo;
 
 public class StudentGradeGenerator {
@@ -49,7 +50,7 @@ public class StudentGradeGenerator {
 	 * store it in a vector.
 	 */
 
-	private static class StudentInfo
+	public static class StudentInfo
 	{
 		public String StudentName;
 		public String StudentNumber;
@@ -58,7 +59,8 @@ public class StudentGradeGenerator {
 		public int MidtermExamMark;
 		public int FinalExamMark;
 		public String Grade;
-		public float GPA; 
+		public float GPA;
+		
 		public StudentInfo(String Name,String ID,int Activities,int Oral, int Midterm ,int FinalExam) {
 			StudentName=Name;
 			StudentNumber=ID;
@@ -67,7 +69,7 @@ public class StudentGradeGenerator {
 			MidtermExamMark=Midterm;
 			FinalExamMark=FinalExam;
 		}
-		public StudentInfo(){}
+		public StudentInfo() {};
 	}
 
     /*variable to store the path of the output generated file
@@ -99,7 +101,7 @@ public class StudentGradeGenerator {
 			/*initialize the Student'sInfo,ErrorlineNumber,_error*/
 			/*The initialization was done here.
 			 *so that for every time the user input a file, when the parseInput 
-			 *funciton is execuated, the three variable will be cleared an re-initalized
+			 *function is execuated, the three variable will be cleared an re-initialized
              for a new file read.
 			 */
 			StudentsInfo =new Vector<StudentInfo>();
@@ -199,15 +201,15 @@ public class StudentGradeGenerator {
 						 * validate it, if it correct return the converted int value.
 						 * other cause an error and exit (still thinking about a better way).
 						 */
-						if((studentInfo.StudentActivitiesMark=ValidateMark("Student Activities Mark", StudentRecords[2].trim(), 10))==-1)return false;
-						if((studentInfo.OralMark=ValidateMark("Oral Mark",StudentRecords[3].trim(),10))==-1)return  false;
-						if((studentInfo.MidtermExamMark=ValidateMark("Midterm Exam Mark",StudentRecords[4].trim(),20))==-1)return false;
-						if((studentInfo.FinalExamMark=ValidateMark("Final Exam Mark",StudentRecords[5].trim(),60))==-1)return false;
+						if((studentInfo.StudentActivitiesMark=ValidateMark("Student Activities Mark", StudentRecords[2].trim(), 10,0))==-1)return false;
+						if((studentInfo.OralMark=ValidateMark("Oral Mark",StudentRecords[3].trim(),10,0))==-1)return  false;
+						if((studentInfo.MidtermExamMark=ValidateMark("Midterm Exam Mark",StudentRecords[4].trim(),20,0))==-1)return false;
+						if((studentInfo.FinalExamMark=ValidateMark("Final Exam Mark",StudentRecords[5].trim(),60,0))==-1)return false;
 					}
 					else 
 					{
-						_error=" Line Number ("+ErrorlineNumber+") should contain exactly six values!";
-						break;
+						_error="Line Number ("+ErrorlineNumber+") should contain exactly six values!";
+						return false;
 					}			 		
 
 					/*if the code reached here then that's mean the parse 
@@ -271,9 +273,19 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 	 * 1) of type int.
 	 * 2) value between 0 and a maximum mark.
 	 */
-	public static int ValidateMark(String MarkName,String mark,int MaxMark)
+	
+	/*isTesting is just a random number to ensure that the function will
+	 * not be used unless in testing (type of security)
+	 */
+	public static int ValidateMark(String MarkName,String mark,int MaxMark,int isTesting)
 	{
 		try {
+    		
+    		if(isTesting==4363532)
+			{
+    			_error="";
+    		    ErrorlineNumber=0;
+			}
 			/*parse the string number in case of :
 			 * success: this means that mark is of type int
 			 * (then the value will be checked if it's between 0 & MaxMark).
@@ -329,9 +341,11 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 	
 	/*****************************************CALCULATOR***********************************/
 
-	public static void gradeAndGPACalculator() {
+	public static void gradeAndGPACalculator(Object... x) {
 
 		try {
+			if(x.length>0)StudentsInfo=(Vector <StudentInfo>)x[0];
+				
 			int total_marks=0;
 			Iterator i = StudentsInfo.iterator();
 			int counter=0;
@@ -435,21 +449,6 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 		return true;
 	}
 	
-	public int validateStudentNumber(String studentNumber) {
-		if (studentNumber.equals("")) {
-			_error = "Line (" + ErrorlineNumber + "): Empty Student Number.";
-			return -1;
-		} else if (studentNumber.length() != 8) {
-			_error = "Line (" + ErrorlineNumber + "): " + studentNumber + " must be 8 characters.";
-			return -1;
-		} else if (!Pattern.matches("[0-9]{7}[0-9a-zA-Z]", studentNumber)) {
-			_error = "Line (" + ErrorlineNumber + "): " + studentNumber + " is not a valid Student Number! It must include 8 numbers, or 7 numbers and a character at the end.";
-			return -1;
-		}
-		else {
-			return 0;
-		}
-	}
 	
 	/***************************************************************************************/
 }
