@@ -87,8 +87,43 @@ public class StudentGradeGenerator {
 	public static String getError(){
 		return _error;
 	}
-
-
+	public static String getSubjectName(){
+		return SubjectName;
+	}
+	public static String getSubjectCode(){
+		return SubjectCode;
+	}
+	public static int getFullMark(){
+		return FullMark;
+	}
+	public static Vector<StudentInfo> getVectorStudentInfo()
+	{
+		return StudentsInfo;
+	}
+ 
+	
+	/*isTesting is just a random number to ensure that the function will
+	 * not be used unless in testing (type of security)
+	 */
+	public static void InitializeAllVariables(int isTesting)
+	{
+		/*this function is only used for testing, 
+		 * as the variable are static, so they save the changes
+		 * which happen for every method call.
+		 * so before testing any test case, all the variables will be
+		 * initialized.
+		 */
+		if(isTesting==4363532)
+		{
+			StudentsInfo =new Vector<StudentInfo>();
+	        ErrorlineNumber=0;
+	        _error=""; 
+	    	SubjectName="";
+	    	SubjectCode="";
+	    	FullMark=0;
+		}
+		
+	}
 	public static Boolean ParseInput(String inputFilePath)
 	{
 		try {
@@ -281,6 +316,12 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 	{
 		try {
     		
+			/*if the function was used in testing development,
+			 * the variable will be re-initialized, to not use 
+			 * any previous value which is stored in the variables 
+			 * (as the variables are static, so they preserve the value 
+			 * every time a function change them).
+			 */
     		if(isTesting==4363532)
 			{
     			_error="";
@@ -341,10 +382,9 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 	
 	/*****************************************CALCULATOR***********************************/
 
-	public static void gradeAndGPACalculator(Object... x) {
+	public static void gradeAndGPACalculator() {
 
 		try {
-			if(x.length>0)StudentsInfo=(Vector <StudentInfo>)x[0];
 				
 			int total_marks=0;
 			Iterator i = StudentsInfo.iterator();
