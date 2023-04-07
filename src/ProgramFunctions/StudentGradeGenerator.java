@@ -101,6 +101,10 @@ public class StudentGradeGenerator {
 		return StudentsInfo;
 	}
  
+	public static void SetVectorStudentInfo(Vector<StudentInfo> s)
+	{
+		StudentsInfo=s;
+	}
 	
 	/*isTesting is just a random number to ensure that the function will
 	 * not be used unless in testing (type of security)
@@ -382,7 +386,7 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 	
 	/*****************************************CALCULATOR***********************************/
 
-	public static void gradeAndGPACalculator() {
+	public static Vector<StudentInfo> gradeAndGPACalculator() {
 
 		try {
 				
@@ -454,6 +458,7 @@ followed by 3 numeric characters. The sevens should be s if exists*/
 			e.printStackTrace();
 		}
 	
+		return StudentsInfo;
 	}
 
 	/**************************Function to write to output file***********************/

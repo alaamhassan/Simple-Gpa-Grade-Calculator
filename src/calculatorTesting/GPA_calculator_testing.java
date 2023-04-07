@@ -70,8 +70,8 @@ class GPA_calculator_testing {
 		expected.add(s2_ex);
 		expected.add(s3_ex);
 
-
-		StudentsInfo=StudentGradeGenerator.gradeAndGPACalculator(StudentsInfo);
+		StudentGradeGenerator.SetVectorStudentInfo(StudentsInfo);
+		StudentsInfo=StudentGradeGenerator.gradeAndGPACalculator();
 		Iterator z =StudentsInfo.iterator();
 		Iterator z_exp =expected.iterator();
 		while (z.hasNext()) {
@@ -143,8 +143,8 @@ class GPA_calculator_testing {
 		expected.add(s2_ex);
 		expected.add(s3_ex);
 
-
-		StudentsInfo=StudentGradeGenerator.gradeAndGPACalculator(StudentsInfo);
+		StudentGradeGenerator.SetVectorStudentInfo(StudentsInfo);
+		StudentsInfo=StudentGradeGenerator.gradeAndGPACalculator();
 		Iterator z =StudentsInfo.iterator();
 		Iterator z_exp =expected.iterator();
 		while (z.hasNext()) {
@@ -217,8 +217,8 @@ class GPA_calculator_testing {
 		expected.add(s2_ex);
 		expected.add(s3_ex);
 
-
-		StudentsInfo=StudentGradeGenerator.gradeAndGPACalculator(StudentsInfo);
+		StudentGradeGenerator.SetVectorStudentInfo(StudentsInfo);
+		StudentsInfo=StudentGradeGenerator.gradeAndGPACalculator();
 		Iterator<StudentInfo> z =StudentsInfo.iterator();
 		Iterator<StudentInfo> z_exp =expected.iterator();
 		while (z.hasNext()) {
