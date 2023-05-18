@@ -17,9 +17,22 @@ class StudentGradeGeneratorWhiteBoxTest {
 	}
 	
 	
-	@Test
-	void test() {
-
-	}
+	//Condition Coverage
+		@Test
+		void FullMarkCheckerConditionCoverage() {
+			
+			int actual=0;
+			int i=0; 
+			String[] MarksInput = new String[] {"100","90"};
+			int[] expected = new int[] {100,-1};
+			
+			for (var mark:MarksInput)
+			{
+				actual =StudentGradeGenerator.FullMark_Checker(mark);
+				assertEquals(expected[i],actual,"SubjectName::Error");
+				i++;
+			}
+	
+		}
 
 }
