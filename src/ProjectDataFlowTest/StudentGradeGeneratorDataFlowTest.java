@@ -17,8 +17,9 @@ class StudentGradeGeneratorDataFlowTest {
 	}
 	
 	
+	//All_Define
 	@Test
-	void isParseInputValidatingCorrectlyTest() {
+	void ParsingInputDefineAllTest() {
 
 		String path = new java.io.File("").getAbsolutePath();
 		
@@ -33,5 +34,17 @@ class StudentGradeGeneratorDataFlowTest {
 	}
 	
 
+	//All_Define_Use
+	@Test
+	void SubjectNameDefineUseTest() {
+		String expected ="mathmatecis and physics";
+		String actual =StudentGradeGenerator.SubjectName_Checker("mathmatecis and physics");
+		
+		assertEquals(expected,actual,"SubjectName::Error");
+		
+		
+	}
+	
+	
 
 }
