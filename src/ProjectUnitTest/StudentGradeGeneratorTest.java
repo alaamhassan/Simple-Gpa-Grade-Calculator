@@ -214,6 +214,36 @@ class StudentGradeGeneratorTest {
 
 	}
 	
+	
+	@Test
+	void test_white_space_initial() {
+		String expected ="";
+		String actual =StudentGradeGenerator.SubjectName_Checker(" mathmatecis");
+		if(actual!=expected) {
+			fail("no white space allowed at beginning");
+		}
+		
+	}
+	@Test
+	void test_onlyAlphabets() {
+		String expected ="";
+		String actual =StudentGradeGenerator.SubjectName_Checker("mathmatecis33andphysics");
+		if(actual!=expected) {
+			fail("only alphabets & spaces");
+		}
+		
+	}
+	
+	@Test
+	void test_white_spaces_allowed() {
+		String expected ="mathmatecis and physics";
+		String actual =StudentGradeGenerator.SubjectName_Checker("mathmatecis and physics");
+		if(actual!=expected) {
+			fail("no white space allowed at beginning");
+		}
+		
+	}
+	
 	/* Student Name test */
 	@Test
 	void testStudentName() {
