@@ -1,4 +1,4 @@
-Subject Name: Software Testing		 Max Mark: 100
+Subject Name: SOFTWARE		 Max Mark: 100
 Student name   Student number   GPA   Grade
-Maram Nabil    18037465    4.0    A+
-Alaa Mohamed    1807455g    3.3    B+
+alaa mohamed    18017512    3.7    A-
+Maram Nabil    18017513    4.0    A+

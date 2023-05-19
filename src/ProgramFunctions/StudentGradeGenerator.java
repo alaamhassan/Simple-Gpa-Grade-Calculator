@@ -23,7 +23,7 @@ public class StudentGradeGenerator {
 	 * student ( StudentName,StudentNumber,StudentActivitiesMark,
 	 * OralMark,MidtermExamMark,FinalExamMark.)	
 	 */
-	private static Vector<StudentInfo> StudentsInfo;
+	public static Vector<StudentInfo> StudentsInfo;
 	/*the error variable is used to store the error 
 	 *raised by any function. which is used later to in the gui
 	 *to display it to the user.
@@ -41,8 +41,8 @@ public class StudentGradeGenerator {
 	 * of each file. which will be used later to generate the 
 	 * output file.
 	 */
-	private static String SubjectName,SubjectCode;
-	private static int FullMark;
+	public static String SubjectName,SubjectCode;
+	public static int FullMark;
 
 	/*the class studentInfo was used to store 
 	 * the six values ( StudentName,StudentNumber,StudentActivitiesMark,
@@ -76,7 +76,7 @@ public class StudentGradeGenerator {
 	* which is used later to display it to the user through the
 	*  Gui.
 	*/
-	private static Path outputFilePath;
+	public static Path outputFilePath;
 
 
 	/********************************Functions*****************************************/
