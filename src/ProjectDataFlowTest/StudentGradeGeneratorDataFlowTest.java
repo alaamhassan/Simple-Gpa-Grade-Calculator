@@ -108,8 +108,6 @@ class StudentGradeGeneratorDataFlowTest {
 		}
 
 	}
-	
-	
 
 	//All_Define_Use
 	@Test
@@ -118,10 +116,21 @@ class StudentGradeGeneratorDataFlowTest {
 		String actual =StudentGradeGenerator.SubjectName_Checker("mathmatecis and physics");
 		
 		assertEquals(expected,actual,"SubjectName::Error");
-		
-		
 	}
 	
-	
+	//All_Use
+	@Test
+	void testSubjectCode() {
+		String[] subjectCodes = new String[] {"CSE411s", "123ECE"};
+		String[] expected = new String[] {"CSE411s", ""};
+		
+		int i = 0;
+		String actual;
 
+		for (var code:subjectCodes) {
+			actual = StudentGradeGenerator.SubjectCode_Checker(code);
+			assertEquals(expected[i], actual, String.format("Student Number Error! \"" + code + "\" is an invalid student number."));
+			i++;
+		}
+	}
 }
